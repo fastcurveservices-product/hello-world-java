@@ -15,11 +15,7 @@ pipeline {
     }
     stage("capture") {
       steps {
-        archiveArtifacts "target/*.jar"
-        junit "target/test-results/test/*.xml"
-        // Configure Jacoco for code coverage
-        jacoco(execPattern: "target/jacoco/*.exec")
-
+        archiveArtifacts "target/hello-world.jar"
       }
     }
     stage('Docker Build') {
