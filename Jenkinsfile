@@ -13,6 +13,15 @@ pipeline {
         sh 'mvn clean install -e -DskipTests'
       }
     }
+    stage("capture") {
+      steps {
+        archiveArtifacts "**/target/*.jar"
+        junit "**/target/test-results/test/*.xml"
+        // Configure Jacoco for code coverage
+        jacoco(execPattern: "**/target/jacoco/*.exec")
+
+      }
+    }
     stage('Docker Build') {
       agent any
       steps {
@@ -28,6 +37,25 @@ pipeline {
           sh 'docker push localhost:5000/hello-world:latest'
         }
       }
+    }
+  }
+  post {
+    always {
+      // Clean up workspace
+      cleanWs()
+    }
+    success {
+      // Notify on success
+      echo "Build successful!"
+    }
+    unstable {
+      // Notify on unstable build
+      echo "Build unstable."
+    }
+
+    failure {
+      // Notify on failure
+      echo "Build failed!"
     }
   }
 }
