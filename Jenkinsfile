@@ -33,10 +33,10 @@ pipeline {
     }
   }
   post {
-    always {
+    // always {
       // Clean up workspace
       // cleanWs()
-    }
+    // }
     success {
       // Notify on success
       echo "Build successful!"
