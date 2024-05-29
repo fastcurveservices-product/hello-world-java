@@ -15,10 +15,10 @@ pipeline {
     }
     stage("capture") {
       steps {
-        archiveArtifacts "**/target/*.jar"
-        junit "**/target/test-results/test/*.xml"
+        archiveArtifacts "target/*.jar"
+        junit "target/test-results/test/*.xml"
         // Configure Jacoco for code coverage
-        jacoco(execPattern: "**/target/jacoco/*.exec")
+        jacoco(execPattern: "target/jacoco/*.exec")
 
       }
     }
